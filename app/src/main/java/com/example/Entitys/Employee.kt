@@ -1,11 +1,14 @@
-package com.example.database
+package com.example.Entitys
 
 import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.Tools.DateConverter
 import java.util.*
 
 @Entity(tableName = "Employee_table")
+@TypeConverters(DateConverter::class)
 class Employee {
 
     @PrimaryKey
