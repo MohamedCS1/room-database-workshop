@@ -1,12 +1,12 @@
 package com.example.DAO
 
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.Entitys.Employee
+import com.example.Tools.DateConverter
 
+@Dao
+@TypeConverters(DateConverter::class)
 interface EmployeeDAO {
     @Insert
     fun insertEmployee(employee:Employee)
