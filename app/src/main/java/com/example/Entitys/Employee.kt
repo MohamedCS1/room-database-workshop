@@ -5,11 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.Tools.DateConverter
+import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "Employee_table")
 @TypeConverters(DateConverter::class)
-class Employee {
+class Employee:Serializable{
 
     @PrimaryKey
     @NonNull

@@ -26,5 +26,5 @@ interface SalaryDAO {
     fun getAllSalariesByDate(from:Date ,to:Date):LiveData<List<Salary>>
 
     @Query("select sum(amount) from Salary_table where empId=:empid")
-    fun getSalariesSum(empid: Long):Double
+    fun getSalariesSum(empid: Long?):Double
 }

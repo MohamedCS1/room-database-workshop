@@ -1,19 +1,21 @@
 package com.example.Adapters
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.Entitys.Employee
 import com.example.Repository.OnValueSum
 import com.example.ViewModel.DataViewModel
 
-class EmployeesSalariesAdapter(application:Application):RecyclerView.Adapter<EmployeesSalariesAdapter.EmployeesSalariesViewHolder>() {
+class EmployeesSalariesAdapter(listemployees:List<Employee> ,viewModel: DataViewModel):RecyclerView.Adapter<EmployeesSalariesAdapter.EmployeesSalariesViewHolder>() {
 
-    val viewmodel = DataViewModel(application)
-    val listemployees = listOf<Employee>()
+    val viewmodel = viewModel
+    private var listemployees = listemployees
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeesSalariesViewHolder {
         return EmployeesSalariesViewHolder(LinearLayout.inflate(parent.context ,com.example.roomdatabase.R.layout.card_salary_employee ,null))
@@ -31,6 +33,13 @@ class EmployeesSalariesAdapter(application:Application):RecyclerView.Adapter<Emp
 
     override fun getItemCount(): Int {
         return listemployees.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(listemployee: List<Employee>)
+    {
+        listemployees = listemployee
+        notifyDataSetChanged()
     }
 
     class EmployeesSalariesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)

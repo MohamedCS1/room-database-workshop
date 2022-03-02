@@ -56,4 +56,8 @@ dependencies {
     // UI
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+
 }

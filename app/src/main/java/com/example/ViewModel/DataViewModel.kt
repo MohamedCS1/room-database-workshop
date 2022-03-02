@@ -48,6 +48,11 @@ class DataViewModel(application: Application):AndroidViewModel(application)  {
         return repository.getEmployeeByName(name)
     }
 
+    fun getEmployeeByName(): LiveData<List<String>>
+    {
+        return repository.getEmployeeByName()
+    }
+
     // Salary
 
     fun insertSalary(salary: Salary)

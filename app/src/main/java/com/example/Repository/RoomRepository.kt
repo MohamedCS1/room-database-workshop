@@ -56,6 +56,10 @@ class RoomRepository(val context: Context) {
     {
         return employeeDAO.getEmployeeByName(name)
     }
+    fun getEmployeeByName():LiveData<List<String>>
+    {
+        return employeeDAO.getEmployeeByName()
+    }
 
     // Salary
 
