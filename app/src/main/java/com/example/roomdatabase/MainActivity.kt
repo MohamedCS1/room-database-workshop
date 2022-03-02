@@ -70,7 +70,9 @@ class MainActivity : AppCompatActivity() {
             activityresultlancher!!.launch(intent)
         }
 
-        buAddEmployee!!.setOnClickListener {
+        bu_activity_add_salary = findViewById(R.id.bu_activity_addsalary)
+
+        bu_activity_add_salary!!.setOnClickListener {
             startActivity(Intent(this ,AddSalaryActivity::class.java))
         }
     }

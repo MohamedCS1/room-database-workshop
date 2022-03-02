@@ -8,16 +8,25 @@ import android.widget.TextView
 import com.example.Entitys.Employee
 import com.example.roomdatabase.R
 
-class SpinnerAdapter(val employees:List<Employee>): BaseAdapter() {
+class SpinnerAdapter(var employees:List<Employee>): BaseAdapter() {
+
+    var position = - 1
+
     override fun getCount(): Int {
         return employees.size
     }
 
     override fun getItem(position: Int): Employee {
+        this.position = position
         return employees[position]
     }
 
     override fun getItemId(position: Int): Long {
+        this.position = position
+        return employees[position].id!!
+    }
+
+    fun getItemId(): Long {
         return employees[position].id!!
     }
 
@@ -31,5 +40,11 @@ class SpinnerAdapter(val employees:List<Employee>): BaseAdapter() {
         val e:Employee = getItem(position)
         tv.text = "${e.name}"
         return view
+    }
+
+    fun SetList(listemployee:List<Employee>)
+    {
+        this.employees = listemployee
+        notifyDataSetChanged()
     }
 }

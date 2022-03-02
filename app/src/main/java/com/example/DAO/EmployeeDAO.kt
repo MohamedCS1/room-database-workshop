@@ -24,11 +24,9 @@ interface EmployeeDAO {
     fun getAllEmployee():LiveData<List<Employee>>
 
     @Query("select * from Employee_table where email=:email")
-    fun getEmployeeByEmail(email:String)
+    fun getEmployeeByEmail(email:String):LiveData<List<Employee>>
 
     @Query("select * from Employee_table where name=:name")
     fun getEmployeeByName(name:String):LiveData<List<Employee>>
 
-    @Query("select name from Employee_table")
-    fun getEmployeeByName():LiveData<List<String>>
 }

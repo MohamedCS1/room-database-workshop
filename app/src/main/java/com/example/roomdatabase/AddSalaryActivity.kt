@@ -4,14 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.Adapters.SpinnerAdapter
 import com.example.Entitys.Employee
+import com.example.Entitys.Salary
 import com.example.ViewModel.DataViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
@@ -19,12 +18,14 @@ import kotlin.collections.ArrayList
 
 class AddSalaryActivity : AppCompatActivity() {
 
-    var bu_date:Button? = null
+    var bu_date_amount:Button? = null
     var selecteddate:Calendar? = null
     var viewmodel:DataViewModel? = null
     var spinner_employees: Spinner? = null
 
     var bu_save_salary:Button? = null
+
+    var et_amount:EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +33,9 @@ class AddSalaryActivity : AppCompatActivity() {
 
         viewmodel = ViewModelProvider(this)[DataViewModel::class.java]
 
-        bu_date = findViewById(R.id.bu_amount_date)
+        bu_date_amount = findViewById(R.id.bu_amount_date)
 
-        bu_date!!.setOnClickListener {
+        bu_date_amount!!.setOnClickListener {
 
             DatePickerDialog.newInstance(object: DatePickerDialog.OnDateSetListener{
                 @SuppressLint("SetTextI18n")
@@ -44,35 +45,45 @@ class AddSalaryActivity : AppCompatActivity() {
                     monthOfYear: Int,
                     dayOfMonth: Int
                 ) {
+                    bu_date_amount!!.text = "$dayOfMonth/$monthOfYear/$year"
                     selecteddate = Calendar.getInstance()
                     selecteddate!!.set(Calendar.YEAR ,year)
                     selecteddate!!.set(Calendar.MONTH ,monthOfYear)
                     selecteddate!!.set(Calendar.DAY_OF_MONTH ,dayOfMonth)
-                    finish()
                 }
 
-            }, Calendar.getInstance()).showsDialog
+            }, Calendar.getInstance()).show(supportFragmentManager ,"")
 
         }
 
         spinner_employees = findViewById(R.id.spinner_employees)
 
-        val employees_name = viewmodel!!.getEmployeeByName() as ArrayList<String>
+        val lsit_employees = listOf<Employee>()
 
-        val spinner_adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, employees_name)
+        viewmodel!!.getAllEmployee()
+
+        val spinner_adapter = SpinnerAdapter(lsit_employees)
 
         spinner_employees!!.adapter = spinner_adapter
 
         viewmodel!!.getAllEmployee().observe(this ,object :Observer<List<Employee>>{
             override fun onChanged(t: List<Employee>?) {
-                employees_name.add(t as String)
+                spinner_adapter.SetList(t!!)
             }
         })
 
         bu_save_salary = findViewById(R.id.bu_save_salary)
 
-        bu_save_salary!!.setOnClickListener {
+        et_amount = findViewById(R.id.edittext_amount)
 
+        bu_save_salary!!.setOnClickListener {
+            if (et_amount!!.text.isEmpty() || selecteddate == null)
+            {
+                Toast.makeText(this ,"enter a valid data" ,Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            viewmodel!!.insertSalary(Salary(et_amount!!.text.toString().toDouble() ,selecteddate!!.time ,spinner_adapter.getItemId()))
+            finish()
         }
     }
 }

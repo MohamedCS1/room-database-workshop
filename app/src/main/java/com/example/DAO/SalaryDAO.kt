@@ -22,7 +22,7 @@ interface SalaryDAO {
     @Query("select * from Salary_table where empId=:empId")
     fun getAllSalariesByEmployeeId(empId:Long):LiveData<List<Salary>>
 
-    @Query("select * from Salary_table where date>=:from AND date<=:from")
+    @Query("select * from Salary_table where date>=:from AND date<=:to")
     fun getAllSalariesByDate(from:Date ,to:Date):LiveData<List<Salary>>
 
     @Query("select sum(amount) from Salary_table where empId=:empid")

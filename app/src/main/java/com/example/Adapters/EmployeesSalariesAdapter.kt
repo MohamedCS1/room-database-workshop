@@ -2,6 +2,7 @@ package com.example.Adapters
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.Entitys.Employee
 import com.example.Repository.OnValueSum
 import com.example.ViewModel.DataViewModel
+import com.example.roomdatabase.R
 
 class EmployeesSalariesAdapter(listemployees:List<Employee> ,viewModel: DataViewModel):RecyclerView.Adapter<EmployeesSalariesAdapter.EmployeesSalariesViewHolder>() {
 
@@ -18,7 +20,7 @@ class EmployeesSalariesAdapter(listemployees:List<Employee> ,viewModel: DataView
     private var listemployees = listemployees
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeesSalariesViewHolder {
-        return EmployeesSalariesViewHolder(LinearLayout.inflate(parent.context ,com.example.roomdatabase.R.layout.card_salary_employee ,null))
+        return EmployeesSalariesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_salary_employee ,parent ,false))
     }
 
     override fun onBindViewHolder(holder: EmployeesSalariesViewHolder, position: Int) {

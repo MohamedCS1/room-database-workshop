@@ -47,18 +47,13 @@ class RoomRepository(val context: Context) {
         return  employeeDAO.getAllEmployee()
     }
 
-    fun getEmployeeByEmail(email:String)
-    {
+    fun getEmployeeByEmail(email:String): LiveData<List<Employee>> {
         return employeeDAO.getEmployeeByEmail(email)
     }
 
     fun getEmployeeByName(name:String): LiveData<List<Employee>>
     {
         return employeeDAO.getEmployeeByName(name)
-    }
-    fun getEmployeeByName():LiveData<List<String>>
-    {
-        return employeeDAO.getEmployeeByName()
     }
 
     // Salary

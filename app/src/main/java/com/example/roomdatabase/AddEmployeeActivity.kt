@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.Entitys.Employee
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
@@ -13,13 +14,13 @@ import java.util.*
 
 class AddEmployeeActivity : AppCompatActivity() {
 
-    var fullname:EditText? = null
-    var idnumber:EditText? = null
-    var email:EditText? = null
-    var birthdate:EditText? = null
-    var bu_save:Button? = null
+    var fullname: EditText? = null
+    var idnumber: EditText? = null
+    var email: EditText? = null
+    var birthdate: TextView? = null
+    var bu_save: Button? = null
 
-    var selecteddate:Calendar? = null
+    var selecteddate: Calendar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +33,8 @@ class AddEmployeeActivity : AppCompatActivity() {
         bu_save = findViewById(R.id.bu_addEmployee)
 
         birthdate!!.setOnClickListener {
-            if (fullname!!.text.isEmpty() ||idnumber!!.text.isEmpty() ||email!!.text.isEmpty() ||birthdate!!.text.isEmpty())
-            {
-                Toast.makeText(this , "Please enter a valid data" ,Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            DatePickerDialog.newInstance(object:DatePickerDialog.OnDateSetListener{
+
+            DatePickerDialog.newInstance(object : DatePickerDialog.OnDateSetListener {
                 @SuppressLint("SetTextI18n")
                 override fun onDateSet(
                     view: DatePickerDialog?,
@@ -45,23 +42,38 @@ class AddEmployeeActivity : AppCompatActivity() {
                     monthOfYear: Int,
                     dayOfMonth: Int
                 ) {
-                    birthdate!!.setText("$dayOfMonth/$monthOfYear/$year")
+                    birthdate!!.text = "$dayOfMonth/$monthOfYear/$year"
                     selecteddate = Calendar.getInstance()
-                    selecteddate!!.set(Calendar.YEAR ,year)
-                    selecteddate!!.set(Calendar.MONTH ,monthOfYear)
-                    selecteddate!!.set(Calendar.DAY_OF_MONTH ,dayOfMonth)
-                    val intent = Intent()
-                    intent.putExtra("EmployeeKey" ,Employee(idnumber!!.text.toString().toLong() ,fullname!!.text.toString() ,email!!.text.toString() ,selecteddate!!.time))
-                    setResult(RESULT_OK ,intent)
-                    finish()
+                    selecteddate!!.set(Calendar.YEAR, year)
+                    selecteddate!!.set(Calendar.MONTH, monthOfYear)
+                    selecteddate!!.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
                 }
 
-            }, Calendar.getInstance()).showsDialog
+            }, Calendar.getInstance()).show(supportFragmentManager, "")
 
         }
 
         bu_save!!.setOnClickListener {
+            if (fullname!!.text.isEmpty() || idnumber!!.text.isEmpty() || email!!.text.isEmpty() || birthdate!!.text.isEmpty()) {
+                Toast.makeText(this, "Please enter a valid data", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
+            val intent = Intent()
+            intent.putExtra(
+                "EmployeeKey",
+                Employee(
+                    idnumber!!.text.toString().toLong(),
+                    fullname!!.text.toString(),
+                    email!!.text.toString(),
+                    selecteddate!!.time
+                )
+            )
+
+            setResult(RESULT_OK, intent)
+            finish()
         }
+
     }
 }

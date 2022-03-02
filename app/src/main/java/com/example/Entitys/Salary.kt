@@ -29,5 +29,13 @@ class Salary {
         this.empId = empId
     }
 
+    constructor(amount:Double? ,date:Date? ,empId:Long?)
+    {
+        this.amount = amount
+        this.date = date
+        this.empId = empId
+    }
+
+
     constructor()
 }

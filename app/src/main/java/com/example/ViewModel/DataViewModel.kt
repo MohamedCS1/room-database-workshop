@@ -38,19 +38,13 @@ class DataViewModel(application: Application):AndroidViewModel(application)  {
         return  repository.getAllEmployee()
     }
 
-    fun getEmployeeByEmail(email:String)
-    {
+    fun getEmployeeByEmail(email:String): LiveData<List<Employee>> {
         return repository.getEmployeeByEmail(email)
     }
 
     fun getEmployeeByName(name:String): LiveData<List<Employee>>
     {
         return repository.getEmployeeByName(name)
-    }
-
-    fun getEmployeeByName(): LiveData<List<String>>
-    {
-        return repository.getEmployeeByName()
     }
 
     // Salary
