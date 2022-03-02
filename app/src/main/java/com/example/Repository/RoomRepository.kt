@@ -87,6 +87,20 @@ class RoomRepository(val context: Context) {
 
     fun getAllSalariesByDate(from: Date, to: Date):LiveData<List<Salary>>
     {
-        return getAllSalariesByDate(from ,to)
+        return salaryDAO.getAllSalariesByDate(from ,to)
     }
+
+    fun getSalariesSum(listener:OnValueSum)
+    {
+        db.queryExecutor.execute {
+            val value = salaryDAO.getSalariesSum()
+            listener.onValueChange(value)
+        }
+    }
+
+
+}
+interface OnValueSum
+{
+    fun onValueChange(sum:Double)
 }

@@ -24,4 +24,7 @@ interface SalaryDAO {
 
     @Query("select * from salary where date>=:from AND date<=:from")
     fun getAllSalariesByDate(from:Date ,to:Date):LiveData<List<Salary>>
+
+    @Query("select sum(amount) from salary")
+    fun getSalariesSum():Double
 }
