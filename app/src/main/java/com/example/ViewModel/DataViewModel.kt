@@ -75,9 +75,9 @@ class DataViewModel(application: Application):AndroidViewModel(application)  {
         return repository.getAllSalariesByDate(from ,to)
     }
 
-    fun getSalariesSum(listener: OnValueSum)
+    fun getSalariesSum(empId: Long?, listener: OnValueSum)
     {
-        val value = repository.getSalariesSum(listener)
+        val value = repository.getSalariesSum(empId ,listener)
     }
 
 

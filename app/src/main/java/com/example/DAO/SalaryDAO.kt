@@ -19,12 +19,12 @@ interface SalaryDAO {
     @Delete
     fun deleteSalary(salary: Salary)
 
-    @Query("select * from salary where empId=:empId")
+    @Query("select * from Salary_table where empId=:empId")
     fun getAllSalariesByEmployeeId(empId:Long):LiveData<List<Salary>>
 
-    @Query("select * from salary where date>=:from AND date<=:from")
+    @Query("select * from Salary_table where date>=:from AND date<=:from")
     fun getAllSalariesByDate(from:Date ,to:Date):LiveData<List<Salary>>
 
-    @Query("select sum(amount) from salary")
-    fun getSalariesSum():Double
+    @Query("select sum(amount) from Salary_table where empId=:empid")
+    fun getSalariesSum(empid: Long):Double
 }

@@ -90,10 +90,10 @@ class RoomRepository(val context: Context) {
         return salaryDAO.getAllSalariesByDate(from ,to)
     }
 
-    fun getSalariesSum(listener:OnValueSum)
+    fun getSalariesSum(empId: Long?, listener:OnValueSum)
     {
         db.queryExecutor.execute {
-            val value = salaryDAO.getSalariesSum()
+            val value = salaryDAO.getSalariesSum(empId)
             listener.onValueChange(value)
         }
     }
