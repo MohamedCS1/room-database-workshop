@@ -27,4 +27,7 @@ interface SalaryDAO {
 
     @Query("select sum(amount) from Salary_table where empId=:empid")
     fun getSalariesSum(empid: Long?):Double
+
+    @Query("select * from Salary_table")
+    fun getAllSalaries():LiveData<List<Salary>>
 }

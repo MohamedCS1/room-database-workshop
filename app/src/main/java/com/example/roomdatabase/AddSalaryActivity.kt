@@ -6,15 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.Adapters.EmployeesSalariesAdapter
 import com.example.Adapters.SpinnerAdapter
 import com.example.Entitys.Employee
 import com.example.Entitys.Salary
 import com.example.ViewModel.DataViewModel
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
-import kotlin.collections.ArrayList
 
 class AddSalaryActivity : AppCompatActivity() {
 
@@ -26,6 +25,9 @@ class AddSalaryActivity : AppCompatActivity() {
     var bu_save_salary:Button? = null
 
     var et_amount:EditText? = null
+
+    var adapter: EmployeesSalariesAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +84,10 @@ class AddSalaryActivity : AppCompatActivity() {
                 Toast.makeText(this ,"enter a valid data" ,Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
             viewmodel!!.insertSalary(Salary(et_amount!!.text.toString().toDouble() ,selecteddate!!.time ,spinner_adapter.getItemId()))
+            val intent = Intent()
+            setResult(11, intent)
             finish()
         }
     }

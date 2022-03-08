@@ -1,16 +1,16 @@
 package com.example.roomdatabase
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,20 +43,30 @@ class MainActivity : AppCompatActivity() {
         main_rv!!.adapter = adapter
         main_rv!!.layoutManager = LinearLayoutManager(applicationContext)
 
+
         viewModel!!.getAllEmployee().observe(this ,object :Observer<List<Employee>>
         {
             override fun onChanged(t: List<Employee>?) {
+                Toast.makeText(this@MainActivity ,"Observed" ,Toast.LENGTH_SHORT).show()
                 adapter!!.setList(t!!)
             }
 
         })
 
+
+
         activityresultlancher = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ,object:ActivityResultCallback<ActivityResult>{
+            @SuppressLint("NotifyDataSetChanged")
             override fun onActivityResult(result: ActivityResult?) {
-                if (result!!.resultCode == RESULT_OK && result.data != null)
+                if (result!!.resultCode == RESULT_OK)
                 {
-                    val employee = result.data!!.getSerializableExtra("EmployeeKey")
-                    viewModel!!.insertEmployee(employee as Employee)
+                    val employee = result.data!!.getSerializableExtra("EmployeeKey") as Employee
+                    viewModel!!.insertEmployee(employee)
+
+                }
+                else if (result.resultCode == 11)
+                {
+                    adapter!!.notifyDataSetChanged()
                 }
 
             }
@@ -73,7 +83,8 @@ class MainActivity : AppCompatActivity() {
         bu_activity_add_salary = findViewById(R.id.bu_activity_addsalary)
 
         bu_activity_add_salary!!.setOnClickListener {
-            startActivity(Intent(this ,AddSalaryActivity::class.java))
+            val intent = Intent(this ,AddSalaryActivity::class.java)
+            activityresultlancher!!.launch(intent)
         }
     }
 
